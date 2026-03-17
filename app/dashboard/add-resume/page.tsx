@@ -8,7 +8,20 @@ import { toast } from "sonner";
 export default function AddResumePage() {
   const router = useRouter();
 
-  const [formData, setFormData] = useState<any>({
+
+  type FormDataType = {
+  fullName: string;
+  email: string;
+  phone: string;
+  skills: string;
+  category: string;
+  experience: string;
+  currentCompany: string;
+  expectedSalary: string;
+  location: string;
+  notes: string;
+};
+  const [formData, setFormData] = useState<FormDataType>({
     fullName: "",
     email: "",
     phone: "",
@@ -35,7 +48,9 @@ export default function AddResumePage() {
     setLoading(true);
     try {
       const data = new FormData();
-      Object.keys(formData).forEach((key) => data.append(key, formData[key]));
+      (Object.keys(formData) as (keyof FormDataType)[]).forEach((key) => {
+        data.append(key, String(formData[key]));
+      });
       if (file) data.append("resumeFile", file);
       await api.post("/resumes", data);
       toast.success("Resume added successfully");
@@ -51,31 +66,15 @@ export default function AddResumePage() {
   const inputClass =
     "w-full bg-[#1a1d27] border border-white/[0.07] text-white placeholder-slate-500 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/50 transition-all";
 
-    const handleFileUpload = async (
+    const handleFileUpload = (
   e: React.ChangeEvent<HTMLInputElement>
 ) => {
   if (!e.target.files) return;
 
   const selectedFile = e.target.files[0];
   setFile(selectedFile);
-
-  const formDataFile = new FormData();
-  formDataFile.append("resume", selectedFile);
-
-  try {
-    const response = await api.post("/resume/parse", formDataFile);
-
-    setFormData((prev) => ({
-      ...prev,
-      ...response.data,
-    }));
-
-    toast.success("Resume auto-filled successfully");
-  } catch (error) {
-    console.error(error);
-    toast.error("Failed to parse resume");
-  }
 };
+
   return (
     <div className="max-w-2xl">
       {/* Header */}
