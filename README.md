@@ -1,41 +1,49 @@
 # Resume CRM System
 
-A full-stack CRM application designed to manage candidate resumes and related information efficiently. The system allows users to store, view, update, and organize resume data through a simple interface.
-
 ## Tech Stack
-
-Frontend
-- React.js
-- Tailwind CSS
-
-Backend
-- Node.js
-- Express.js
-
-Database
-- MongoDB
-
-Tools
-- Git
-- GitHub
+- Frontend: Next.js 14 (App Router, TypeScript, Tailwind CSS)
+- Backend: Express.js
+- Database: MongoDB (Mongoose)
+- Authentication: JWT
+- File Upload: Multer (PDF storage)
 
 ## Features
+- Admin login with JWT authentication
+- Protected dashboard routes
+- Add resume with PDF upload
+- View resume details
+- Edit resume
+- Delete resume with confirmation
+- Update candidate status
+- Search with debounce
+- Frontend pagination
+- Dashboard analytics cards
+- Toast notifications
+- Reusable component structure
 
-- Add and manage candidate resumes
-- View and update candidate information
-- Store resume data in a structured database
-- Responsive user interface
-- REST API integration
+## Project Structure
+root/
+├── client/
+├── server/
+├── uploads/
 
+## How To Run
 
-## Installation
+### Backend
+cd server  
+npm install  
+npm run dev  
 
-### Clone the repository
+### Frontend
+cd client  
+npm install  
+npm run dev  
 
-```bash
-git clone https://github.com/yourusername/frontend-repo
-git clone https://github.com/yourusername/backend-repo
+## Environment Variables
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### server/.env
+MONGO_URL=your_mongo_connection  
+JWT_SECRET=your_secret  
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### client/.env.local
+NEXT_PUBLIC_API_URL=http://localhost:5000/api
